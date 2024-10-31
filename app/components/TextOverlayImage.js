@@ -35,6 +35,7 @@ const TextOverlayImage = ({ src, fontSize = 30, color, value }) => {
       style={{
         maxWidth: '100%',
         maxHeight: '100%',
+        pointerEvents: 'none',
       }}
     >
 

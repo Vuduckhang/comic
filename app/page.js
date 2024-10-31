@@ -90,31 +90,37 @@ export default function Home() {
           Comic Test
         </h1>
 
-        {comicList.map((item, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                display: 'flex',
-                position: 'relative',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+        <div style={{
+          pointerEvents: 'none',
+        }}>
+          {comicList.map((item, index) => {
+            return (
               <div
+                key={index}
                 style={{
+                  display: 'flex',
                   position: 'relative',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  pointerEvents: 'none',
                 }}>
-                <TextOverlayImage
-                  // src={`/sample/image_input/${item?.old_image}`}
-                  src={`/sample/image_output/${item?.new_image}`}
-                  value={item?.dialogues}
-                  // fontSize={32}
-                  color='red'
-                />
+                <div
+                  style={{
+                    position: 'relative',
+                    pointerEvents: 'none',
+                  }}>
+                  <TextOverlayImage
+                    // src={`/sample/image_input/${item?.old_image}`}
+                    src={`/sample/image_output/${item?.new_image}`}
+                    value={item?.dialogues}
+                    // fontSize={32}
+                    color='red'
+                  />
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </div>
   )
