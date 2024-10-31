@@ -71,7 +71,7 @@ export default function Home() {
   useEffect(() => {
     getData()
   }, [])
-  console.log(comicList)
+
   return (
     <div
       style={{
@@ -89,30 +89,6 @@ export default function Home() {
           }}>
           Comic Test
         </h1>
-        {/* <DialogueOverlay
-          src="https://img.pikbest.com/origin/09/19/03/61zpIkbEsTGjk.jpg!bwr800"
-          dialogues={[
-            {
-              x: 150,
-              y: 100,
-              text: "Hello, xxxxxxxxxxxxxxxxxxxxxxxx!"
-            }
-          ]}
-        />
-        <TextOverlayImage
-          src="https://img.pikbest.com/origin/09/19/03/61zpIkbEsTGjk.jpg!bwr800"
-          fontSize={24}
-          value={
-            [
-              {
-                x: 150,
-                y: 100,
-                text: "Hello, xxxxxxxxxxxxxxxxxxxxxxxx!"
-              }
-            ]
-          }
-          color="red"
-        /> */}
 
         {comicList.map((item, index) => {
           return (
