@@ -18,6 +18,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // window.addEventListener("keydown", function (event) {
+  //   console.log(event)
+  //   if (event.ctrlKey) {
+  //     event.preventDefault();
+  //   }
+  //   if (event.keyCode == 123) {
+  //     event.preventDefault();
+  //   }
+  // });
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

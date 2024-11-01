@@ -69,11 +69,20 @@ export default function Home() {
   }
 
   useEffect(() => {
+    window.addEventListener('keydown', function (event) {
+      if (event.code === "F12" || event.key === "F12") {
+        event.preventDefault();
+        // Do whatever you want here
+      }
+    });
+    window.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('contextmenu', event => event.preventDefault());
     getData()
   }, [])
 
   return (
     <div
+      id={'comic'}
       style={{
         display: 'flex',
         justifyContent: 'center',
