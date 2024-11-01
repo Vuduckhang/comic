@@ -71,7 +71,7 @@ export default function Home() {
     let word_array = await csv2json(data)
     setComicList(word_array)
   }
-  console.log(isDevToolsOpen)
+
   useEffect(() => {
     const handleChange = (event) => {
       setIsDevToolsOpen(event.detail.isOpen)
