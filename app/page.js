@@ -2,9 +2,13 @@
 // import DialogueOverlay from './components/DialogueOverlay'
 import TextOverlayImage from './components/TextOverlayImage'
 import React, { useEffect, useState } from 'react'
+import devtoolsDetect from 'devtools-detect'
 
 export default function Home() {
   const [comicList, setComicList] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isDevToolsOpen, setIsDevToolsOpen] = useState(devtoolsDetect.isOpen)
+
   const csv2json = (str, delimiter = ',') => {
     const titles = str.slice(0, str.indexOf('\n')).split(delimiter)
     const rows = str.slice(str.indexOf('\n') + 1).split('\n')
@@ -28,8 +32,8 @@ export default function Home() {
       const existing = acc.find((i) => i.old_image === item.old_image)
       let coordinatesArray = JSON.parse(item.coordinates ?? '[]')
       if (coordinatesArray[0]) {
-        let width = (coordinatesArray[1][0] - coordinatesArray[0][0])
-        let height = (coordinatesArray[2][1] - coordinatesArray[1][1])
+        let width = coordinatesArray[1][0] - coordinatesArray[0][0]
+        let height = coordinatesArray[2][1] - coordinatesArray[1][1]
         if (existing) {
           existing.dialogues = [
             ...existing.dialogues,
@@ -67,20 +71,41 @@ export default function Home() {
     let word_array = await csv2json(data)
     setComicList(word_array)
   }
-
+  console.log(isDevToolsOpen)
   useEffect(() => {
+    const handleChange = (event) => {
+      setIsDevToolsOpen(event.detail.isOpen)
+    }
+
+    window.addEventListener('devtoolschange', handleChange)
     window.addEventListener('keydown', function (event) {
-      if (event.code === "F12" || event.key === "F12") {
-        event.preventDefault();
+      if (event.code === 'F12' || event.key === 'F12') {
+        event.preventDefault()
         // Do whatever you want here
       }
-    });
-    window.addEventListener('contextmenu', event => event.preventDefault());
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    getData()
-  }, [])
+    })
+    window.addEventListener('contextmenu', (event) => event.preventDefault())
+    document.addEventListener('contextmenu', (event) => event.preventDefault())
+    if (!isDevToolsOpen) {
+      getData()
+    }
+    return () => {
+      window.removeEventListener('devtoolschange', handleChange)
+    }
+  }, [isDevToolsOpen])
 
-  return (
+  return isDevToolsOpen ? (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        fontSize: '32px',
+      }}>
+      Close devtool to load page
+    </div>
+  ) : (
     <div
       id={'comic'}
       style={{
@@ -99,9 +124,10 @@ export default function Home() {
           Comic Test
         </h1>
 
-        <div style={{
-          pointerEvents: 'none',
-        }}>
+        <div
+          style={{
+            pointerEvents: 'none',
+          }}>
           {comicList.map((item, index) => {
             return (
               <div
@@ -134,4 +160,3 @@ export default function Home() {
     </div>
   )
 }
-

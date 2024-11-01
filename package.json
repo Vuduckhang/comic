@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "devtools-detect": "^4.0.2",
     "next": "15.0.1",
     "next-images": "^1.8.5",
     "prop-types": "^15.8.1",
