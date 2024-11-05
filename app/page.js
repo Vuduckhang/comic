@@ -8,7 +8,9 @@ const showDevTool = process.env.REACT_APP_SHOW_DEVTOOL ?? false
 
 export default function Home() {
   const [comicList, setComicList] = useState([])
-  const [isDevToolsOpen, setIsDevToolsOpen] = useState(devtoolsDetect.isOpen)
+  const [isDevToolsOpen, setIsDevToolsOpen] = useState(
+    !showDevTool ? devtoolsDetect.isOpen : false
+  )
 
   const csv2json = (str, delimiter = ',') => {
     const titles = str.slice(0, str.indexOf('\n')).split(delimiter)
@@ -90,8 +92,6 @@ export default function Home() {
       document.addEventListener('contextmenu', (event) =>
         event.preventDefault()
       )
-    } else {
-      setIsDevToolsOpen(false)
     }
     if (!isDevToolsOpen) {
       getData()
