@@ -93,6 +93,7 @@ export default function Home() {
         event.preventDefault()
       )
     }
+
     if (!isDevToolsOpen) {
       getData()
     }
