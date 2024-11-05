@@ -93,11 +93,9 @@ export default function Home() {
         event.preventDefault()
       )
     }
-
     if (!isDevToolsOpen) {
       getData()
     }
-
     if (!showDevTool) {
       return () => {
         window.removeEventListener('devtoolschange', handleChange)
