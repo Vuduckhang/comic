@@ -8,7 +8,6 @@ const showDevTool = process.env.REACT_APP_SHOW_DEVTOOL
 
 export default function Home() {
   const [comicList, setComicList] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const [isDevToolsOpen, setIsDevToolsOpen] = useState(devtoolsDetect.isOpen)
 
   const csv2json = (str, delimiter = ',') => {
