@@ -4,7 +4,7 @@ import TextOverlayImage from './components/TextOverlayImage'
 import React, { useEffect, useState } from 'react'
 import devtoolsDetect from 'devtools-detect'
 
-const showDevTool = process.env.REACT_APP_SHOW_DEVTOOL
+const showDevTool = process.env.REACT_APP_SHOW_DEVTOOL ?? false
 
 export default function Home() {
   const [comicList, setComicList] = useState([])
@@ -73,12 +73,12 @@ export default function Home() {
     setComicList(word_array)
   }
 
+  const handleChange = (event) => {
+    setIsDevToolsOpen(event.detail.isOpen)
+  }
+
   useEffect(() => {
     if (!showDevTool) {
-      const handleChange = (event) => {
-        setIsDevToolsOpen(event.detail.isOpen)
-      }
-
       window.addEventListener('devtoolschange', handleChange)
       window.addEventListener('keydown', function (event) {
         if (event.code === 'F12' || event.key === 'F12') {
@@ -90,9 +90,13 @@ export default function Home() {
       document.addEventListener('contextmenu', (event) =>
         event.preventDefault()
       )
-      if (!isDevToolsOpen) {
-        getData()
-      }
+    } else {
+      setIsDevToolsOpen(false)
+    }
+    if (!isDevToolsOpen) {
+      getData()
+    }
+    if (!showDevTool) {
       return () => {
         window.removeEventListener('devtoolschange', handleChange)
       }
