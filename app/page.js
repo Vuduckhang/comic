@@ -4,6 +4,8 @@ import TextOverlayImage from './components/TextOverlayImage'
 import React, { useEffect, useState } from 'react'
 import devtoolsDetect from 'devtools-detect'
 
+const showDevTool = process.env.REACT_APP_SHOW_DEVTOOL
+
 export default function Home() {
   const [comicList, setComicList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -73,24 +75,28 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const handleChange = (event) => {
-      setIsDevToolsOpen(event.detail.isOpen)
-    }
-
-    window.addEventListener('devtoolschange', handleChange)
-    window.addEventListener('keydown', function (event) {
-      if (event.code === 'F12' || event.key === 'F12') {
-        event.preventDefault()
-        // Do whatever you want here
+    if (!showDevTool) {
+      const handleChange = (event) => {
+        setIsDevToolsOpen(event.detail.isOpen)
       }
-    })
-    window.addEventListener('contextmenu', (event) => event.preventDefault())
-    document.addEventListener('contextmenu', (event) => event.preventDefault())
-    if (!isDevToolsOpen) {
-      getData()
-    }
-    return () => {
-      window.removeEventListener('devtoolschange', handleChange)
+
+      window.addEventListener('devtoolschange', handleChange)
+      window.addEventListener('keydown', function (event) {
+        if (event.code === 'F12' || event.key === 'F12') {
+          event.preventDefault()
+          // Do whatever you want here
+        }
+      })
+      window.addEventListener('contextmenu', (event) => event.preventDefault())
+      document.addEventListener('contextmenu', (event) =>
+        event.preventDefault()
+      )
+      if (!isDevToolsOpen) {
+        getData()
+      }
+      return () => {
+        window.removeEventListener('devtoolschange', handleChange)
+      }
     }
   }, [isDevToolsOpen])
 
